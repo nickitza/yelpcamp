@@ -1,9 +1,9 @@
 var express = require("express")
 var app = express()
-// app.use("engine views", "ejs")
+app.set("view engine", "ejs")
 
 app.get('/', function(req, res){
-  res.send("Landing Page holder")
+  res.render("landing")
 })
 
 app.listen(3000, function(){
