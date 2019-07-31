@@ -1,0 +1,11 @@
+<% include partials/header %>
+
+<h1>Add A Campground</h1>
+<%# action should be where you are posting the form data to %>
+<form action="/campgrounds" method="POST">
+  <input type="text" name="name" placeholder="Campground name">
+  <input type="text" name="image" placeholder="Campground image url">
+  <button> Add </button>
+</form>
+
+<% include partials/footer %>

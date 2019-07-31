@@ -10,7 +10,6 @@ var campgrounds = [
   {name:"Perranport Beach Campground", image:"https://images.pexels.com/photos/1376960/pexels-photo-1376960.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"},
   {name: "Dead Horse Peak", image:"https://images.pexels.com/photos/2496880/pexels-photo-2496880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"},
   {name: "Zion National Park", image:"https://images.pexels.com/photos/2071563/pexels-photo-2071563.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"}
-  
 ]
 
 app.get('/', function(req, res){
@@ -24,8 +23,17 @@ app.get('/campgrounds', function(req, res){
 app.post('/campgrounds', function(req, res){
   //TODO get data from form and add to campgrounds array
   //you can test .post routes using postman
-  
+  var name = req.body.name
+  var image = req.body.image
+  var newCamp = {name: name, image: image}
+  campgrounds.push(newCamp)
   //TODO redirect back to all campgrounds
+  //default is to redirect to the GET route
+  res.redirect("/campgrounds")
+})
+
+app.get('/campgrounds/new', function(req, res){
+  res.render("new.ejs")
 })
 
 app.listen(3000, function(){
