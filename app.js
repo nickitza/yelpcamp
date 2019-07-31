@@ -1,5 +1,8 @@
 var express = require("express")
 var app = express()
+var bodyParser= require("body-parser")
+
+app.use(bodyParser.urlencoded({extended: true}))
 app.set("view engine", "ejs")
 
 var campgrounds = [
@@ -16,6 +19,13 @@ app.get('/', function(req, res){
 
 app.get('/campgrounds', function(req, res){
   res.render("campgrounds", {campgrounds: campgrounds})
+})
+
+app.post('/campgrounds', function(req, res){
+  //TODO get data from form and add to campgrounds array
+  //you can test .post routes using postman
+  
+  //TODO redirect back to all campgrounds
 })
 
 app.listen(3000, function(){
