@@ -4,18 +4,25 @@ var express = require("express"),
     mongoose = require("mongoose")
 
 
-mongoose.connect("mongodb://localhost/yelpcamp")
-app.use(bodyParser.urlencoded({extended: true}))
-app.set("view engine", "ejs")
+  mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
+  app.use(bodyParser.urlencoded({extended: true}))
+  app.set("view engine", "ejs")
 
 //* Schema setup:
 var campgroundSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 })
 
 //* compile schema into a model
 var Campground = mongoose.model("Campground", campgroundSchema)
+
+// Campground.create({
+//   name: "Gwynedd Campground",
+//   image: "https://images.pexels.com/photos/1462014/pexels-photo-1462014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+//   description: " campground in remote area of Wales, England."
+// })
 
 // var campgrounds = [
 //   {name: "São Paolo Grounds", image:"https://images.pexels.com/photos/2376989/pexels-photo-2376989.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"},
@@ -41,6 +48,7 @@ app.get('/campgrounds', function(req, res){
   })
 })
 
+
 app.post('/campgrounds', function(req, res){
   //TODO get data from form and add to campgrounds array
   //you can test .post routes using postman
@@ -58,9 +66,13 @@ app.post('/campgrounds', function(req, res){
     }
   })
 })
-
+//*new needs to be declared before show
 app.get('/campgrounds/new', function(req, res){
   res.render("new.ejs")
+})
+
+app.get("/campgrounds/:id", function(req, res){
+  res.render("show")
 })
 
 app.listen(3000, function(){
