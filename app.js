@@ -43,7 +43,7 @@ app.get('/campgrounds', function(req, res){
     if(err){
       console.log("**ERR: " + err)
     }else{
-      res.render("campgrounds", {campgrounds: allCamps})
+      res.render("index", {campgrounds: allCamps})
     }
   })
 })
@@ -54,7 +54,8 @@ app.post('/campgrounds', function(req, res){
   //you can test .post routes using postman
   var name = req.body.name
   var image = req.body.image
-  var newCamp = {name: name, image: image}
+  var description = req.body.description
+  var newCamp = {name: name, image: image, description: description}
   Campground.create(newCamp, function(err, newCamp){
     if(err){
       console.log(err)
@@ -72,7 +73,13 @@ app.get('/campgrounds/new', function(req, res){
 })
 
 app.get("/campgrounds/:id", function(req, res){
-  res.render("show")
+  Campground.findById(req.params.id, function(err, foundCamp){
+    if(err){
+      console.log(err)
+    }else{
+      res.render("show", {campground: foundCamp})
+    }
+  })
 })
 
 app.listen(3000, function(){
