@@ -5,6 +5,7 @@
 <p>Campground Description: <%= campground.description %></p>
 <h4>Comments</h4>
 <hr>
+<a class="btn btn-success" href="/campgrounds/<%=campground._id%>/comments/new">Add Comment</a>
 <% campground.comments.forEach(function(comment){ %>
   <p><%= comment.text %> - <strong><%= comment.author %></strong></p>
 <% }) %>

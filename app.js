@@ -4,6 +4,7 @@ var express = require("express"),
     mongoose = require("mongoose"),
     Campground = require("./models/campground"),
     seedDB = require("./seeds")
+    Comment = require('./models/comment')
 
     mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
     app.use(bodyParser.urlencoded({extended: true}))
@@ -34,7 +35,11 @@ app.get('/campgrounds', function(req, res){
   })
 })
 
-//*render NEW campground form, CREATE campground from form
+//*NEW form needs to be declared before show
+app.get('/campgrounds/new', function(req, res){
+  res.render("campgrounds/new")
+})
+//* CREATE campground from form
 app.post('/campgrounds', function(req, res){
   //TODO get data from form and add to campgrounds array
   //you can test .post routes using postman
@@ -52,10 +57,6 @@ app.post('/campgrounds', function(req, res){
     }
   })
 })
-//!NEW needs to be declared before show
-app.get('/campgrounds/new', function(req, res){
-  res.render("campgrounds/new")
-})
 
 //*SHOW campground
 app.get("/campgrounds/:id", function(req, res){
@@ -68,6 +69,7 @@ app.get("/campgrounds/:id", function(req, res){
   })
 })
 //TODO||||||||||||||||||||| COMMENTS ROUTES |||||||||||||||||||||||||||
+
 //*NEW COMMENT
 app.get("/campgrounds/:id/comments/new", function(req, res){
   Campground.findById(req.params.id, function(err, campground){
@@ -78,6 +80,26 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
     }
   })
 })
+
+//*CREATE COMMENT
+app.post("/campgrounds/:id/comments", function(req, res){
+  Campground.findById(req.params.id, function(err, campground){
+    if(err){
+      console.log(err)
+      res.redirect("/campgrounds")
+    }else{
+      Comment.create(req.body.comment, function(err, comment){
+        if(err){
+          console.log(err)
+        }else {
+           campground.comments.push(comment)
+           campground.save()
+           res.redirect("/campgrounds/"+campground._id)
+          }
+      })
+    }  
+  }
+)})
 
 
 
