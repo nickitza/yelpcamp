@@ -1,28 +1,14 @@
 var express = require("express"),
     app = express(),
     bodyParser= require("body-parser"),
-    mongoose = require("mongoose")
+    mongoose = require("mongoose"),
+    Campground = require("./models/campground"),
+    seedDB = require("./seeds")
 
-
+  seedDB()
   mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
   app.use(bodyParser.urlencoded({extended: true}))
   app.set("view engine", "ejs")
-
-//* Schema setup:
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-})
-
-//* compile schema into a model
-var Campground = mongoose.model("Campground", campgroundSchema)
-
-// Campground.create({
-//   name: "Gwynedd Campground",
-//   image: "https://images.pexels.com/photos/1462014/pexels-photo-1462014.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-//   description: " campground in remote area of Wales, England."
-// })
 
 // var campgrounds = [
 //   {name: "São Paolo Grounds", image:"https://images.pexels.com/photos/2376989/pexels-photo-2376989.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"},
