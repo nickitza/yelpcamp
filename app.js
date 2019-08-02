@@ -23,18 +23,18 @@ var express = require("express"),
 app.get('/', function(req, res){
   res.render("landing")
 })
-
+//* INDEX
 app.get('/campgrounds', function(req, res){
   Campground.find({}, function(err, allCamps){
     if(err){
       console.log("**ERR: " + err)
     }else{
-      res.render("index", {campgrounds: allCamps})
+      res.render("campgrounds/index", {campgrounds: allCamps})
     }
   })
 })
 
-
+//*render NEW campground form, CREATE campground from form
 app.post('/campgrounds', function(req, res){
   //TODO get data from form and add to campgrounds array
   //you can test .post routes using postman
@@ -47,27 +47,51 @@ app.post('/campgrounds', function(req, res){
       console.log(err)
     }
     else{
-      //* redirect back to all campgrounds
       //default is to redirect to the GET route
       res.redirect('/campgrounds')
     }
   })
 })
-//*new needs to be declared before show
+//!NEW needs to be declared before show
 app.get('/campgrounds/new', function(req, res){
-  res.render("new.ejs")
+  res.render("campgrounds/new")
 })
 
+//*SHOW campground
 app.get("/campgrounds/:id", function(req, res){
   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
     if(err){
       console.log(err)
     }else{
-      res.render("show", {campground: foundCamp})
+      res.render("campgrounds/show", {campground: foundCamp})
+    }
+  })
+})
+//TODO||||||||||||||||||||| COMMENTS ROUTES |||||||||||||||||||||||||||
+//*NEW COMMENT
+app.get("/campgrounds/:id/comments/new", function(req, res){
+  Campground.findById(req.params.id, function(err, campground){
+    if(err){
+      console.log(err)
+    }else{
+      res.render("comments/new", {campground: campground})
     }
   })
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+// =========================================================================
 app.listen(3000, function(){
   console.log("** Yelp Camp server started **")
 })
