@@ -5,10 +5,10 @@ var express = require("express"),
     Campground = require("./models/campground"),
     seedDB = require("./seeds")
 
-  seedDB()
-  mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
-  app.use(bodyParser.urlencoded({extended: true}))
-  app.set("view engine", "ejs")
+    mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
+    app.use(bodyParser.urlencoded({extended: true}))
+    app.set("view engine", "ejs")
+    seedDB()
 
 // var campgrounds = [
 //   {name: "São Paolo Grounds", image:"https://images.pexels.com/photos/2376989/pexels-photo-2376989.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"},
@@ -59,7 +59,7 @@ app.get('/campgrounds/new', function(req, res){
 })
 
 app.get("/campgrounds/:id", function(req, res){
-  Campground.findById(req.params.id, function(err, foundCamp){
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp){
     if(err){
       console.log(err)
     }else{
