@@ -6,9 +6,6 @@
       <%# action should be where you are posting the form data to %>
       <form action="/campgrounds/<%=campground._id%>/comments" method="POST">
         <div class="form-group">
-          <input class="form-control" type="text" name="comment[author]" placeholder="Your Name">
-        </div>
-        <div class="form-group">
         <input class="form-control" type="text" name="comment[text]" placeholder="Comment here">
         </div>
         <div class="form-group">
