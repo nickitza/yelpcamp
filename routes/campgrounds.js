@@ -48,6 +48,11 @@ router.get("/:id", function(req, res){
     }
   })
 })
+
+//*EDIT
+  
+//*UPDATE
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next()
