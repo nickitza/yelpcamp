@@ -106,7 +106,10 @@ app.post("/campgrounds/:id/comments", function(req, res){
     }  
   }
 )})
-
+//*AUTH ROUTES
+app.get("/register", function(req, res){
+  res.render("register")
+})
 
 
 
