@@ -3,8 +3,11 @@ var express = require("express"),
     bodyParser= require("body-parser"),
     mongoose = require("mongoose"),
     Campground = require("./models/campground"),
-    seedDB = require("./seeds")
-    Comment = require('./models/comment')
+    seedDB = require("./seeds"),
+    Comment = require('./models/comment'),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+    User = require('./models/user')
 
     mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
     app.use(bodyParser.urlencoded({extended: true}))
