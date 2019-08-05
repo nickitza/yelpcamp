@@ -15,23 +15,24 @@ router.get('/', function(req, res){
 })
 
 //*NEW form needs to be declared before show
-router.get('/new', function(req, res){
+router.get('/new', isLoggedIn, function(req, res){
   res.render("campgrounds/new")
 })
 //* CREATE campground from form
-router.post('/', function(req, res){
-  //TODO get data from form and add to campgrounds array
-  //you can test .post routes using postman
+router.post('/', isLoggedIn, function(req, res){
   var name = req.body.name
   var image = req.body.image
   var description = req.body.description
-  var newCamp = {name: name, image: image, description: description}
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  }
+  var newCamp = {name: name, image: image, description: description, author: author}
   Campground.create(newCamp, function(err, newCamp){
     if(err){
       console.log(err)
     }
     else{
-      //default is to redirect to the GET route
       res.redirect('/campgrounds')
     }
   })
@@ -47,5 +48,11 @@ router.get("/:id", function(req, res){
     }
   })
 })
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next()
+  }
+  res.redirect('/login')
+}
 
 module.exports = router
