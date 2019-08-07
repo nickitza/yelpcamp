@@ -37,6 +37,21 @@ router.post("/campgrounds/:id/comments", function(req, res){
     }  
   }
 )})
+//*EDIT COMMENT
+router.get('/campgrounds/:id/comments/:comment_id/edit', function(req, res){
+  res.send("Edit Comment Page")
+})
+
+//*UPDATE COMMENT
+router.post('/campgrounds/:id/comments/:comment_id', function(req, res){
+  
+})
+
+//*DESTROY COMMENT
+router.delete('/campgrounds/:id/comments/:comment_id', function(req, res){
+  res.redirect('')
+})
+
 
 //*Middleware
 function isLoggedIn(req, res, next){
