@@ -62,7 +62,13 @@ router.put('/campgrounds/:id/comments/:comment_id', function(req, res){
 
 //*DESTROY COMMENT
 router.delete('/campgrounds/:id/comments/:comment_id', function(req, res){
-  res.redirect('')
+  Comment.findByIdAndRemove(req.params.comment_id, function(err){
+    if(err){
+      res.redirect('back')
+    }else{
+      res.redirect('/campgrounds/'+req.params.id) 
+    }
+  })
 })
 
 
