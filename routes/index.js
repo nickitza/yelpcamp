@@ -20,10 +20,11 @@ router.post("/register", function(req, res){
   var newUser = new User({username: req.body.username})
   User.register(newUser, req.body.password, function(err, user){
     if(err){
-      console.log(err)
+      req.flash("error", err.message)
       return res.render("register")
     }
     passport.authenticate("local")(req, res, function(){
+      req.flash("success", "Successfully registered.")
       res.redirect("/campgrounds")
     })
   })
@@ -49,13 +50,5 @@ router.get('/logout', function(req, res){
   req.flash("success", "Successfully Logged Out")
   res.redirect('/campgrounds')
 })
-
-//*MIDDLEWARE
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next()
-  }
-  res.redirect('/login')
-}
 
 module.exports = router
