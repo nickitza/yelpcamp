@@ -8,7 +8,8 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     User = require('./models/user'),
-    methodOverride = require("method-override")
+    methodOverride = require("method-override"),
+    flash = require("connect-flash")
 
 var commentRoutes = require("./routes/comments")
 var campgroundRoutes = require("./routes/campgrounds")
@@ -37,6 +38,7 @@ var indexRoutes = require("./routes/index")
   app.use(commentRoutes)
   app.use(indexRoutes)
   app.use("/campgrounds", campgroundRoutes)
+  app.use(flash())
 
 // =========================================================================
 app.listen(3000, function(){
