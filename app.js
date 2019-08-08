@@ -26,6 +26,7 @@ var indexRoutes = require("./routes/index")
     resave: false,
     saveUninitialized: false
   }))
+  app.use(flash())
   app.use(passport.initialize())
   app.use(passport.session())
   passport.use(new LocalStrategy(User.authenticate()))
@@ -33,12 +34,12 @@ var indexRoutes = require("./routes/index")
   passport.deserializeUser(User.deserializeUser())
   app.use(function(req,res,next){
     res.locals.currentUser = req.user
+    res.locals.message = req.flash("error")
     next()
   })
   app.use(commentRoutes)
   app.use(indexRoutes)
   app.use("/campgrounds", campgroundRoutes)
-  app.use(flash())
 
 // =========================================================================
 app.listen(3000, function(){
