@@ -9,13 +9,21 @@ var express = require("express"),
     LocalStrategy = require("passport-local"),
     User = require('./models/user'),
     methodOverride = require("method-override"),
-    flash = require("connect-flash")
+    flash = require("connect-flash"),
+    mongoose= require("mongoose")
 
 var commentRoutes = require("./routes/comments")
 var campgroundRoutes = require("./routes/campgrounds")
 var indexRoutes = require("./routes/index")
-
-  mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
+  mongoose.connect("mongodb+srv://nickitza:LoLB5si8a1Xw5xI7@cluster0-x9vbq.mongodb.net/test?retryWrites=true&w=majority", { 
+    useNewUrlParser: true,
+    useCreateIndex: true
+    }).then(()=> {
+      console.log("connected to DB")
+    }).catch(err => {
+      console.log("ERROR: ", err.message)
+    })
+  // mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
   app.use(bodyParser.urlencoded({extended: true}))
   app.set("view engine", "ejs")
   app.use(express.static(__dirname + "/public"))
