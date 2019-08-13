@@ -15,15 +15,17 @@ var express = require("express"),
 var commentRoutes = require("./routes/comments")
 var campgroundRoutes = require("./routes/campgrounds")
 var indexRoutes = require("./routes/index")
-  mongoose.connect("mongodb+srv://nickitza:LoLB5si8a1Xw5xI7@cluster0-x9vbq.mongodb.net/test?retryWrites=true&w=majority", { 
-    useNewUrlParser: true,
-    useCreateIndex: true
-    }).then(()=> {
-      console.log("connected to DB")
-    }).catch(err => {
-      console.log("ERROR: ", err.message)
-    })
-  // mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true })
+  // mongoose.connect("mongodb+srv://nickitza:LoLB5si8a1Xw5xI7@cluster0-x9vbq.mongodb.net/test?retryWrites=true&w=majority", { 
+  //   useNewUrlParser: true,
+  //   useCreateIndex: true
+  //   }).then(()=> {
+  //     console.log("connected to DB")
+  //   }).catch(err => {
+  //     console.log("ERROR: ", err.message)
+  //   })
+  mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true })
+
+  
   app.use(bodyParser.urlencoded({extended: true}))
   app.set("view engine", "ejs")
   app.use(express.static(__dirname + "/public"))
@@ -51,6 +53,6 @@ var indexRoutes = require("./routes/index")
   app.use("/campgrounds", campgroundRoutes)
 
 // =========================================================================
-app.listen(3000, process.env.IP, function(){
+app.listen(3000, function(){
   console.log("** Yelp Camp server started **")
 })
